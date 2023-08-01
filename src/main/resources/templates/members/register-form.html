@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+            rel="stylesheet"
+    />
+
+    <link rel="stylesheet" th:href="@{/css/register/register.css}" />
+
+    <link rel="shortcut icon" th:href="@{/img/logo.png}" />
+
+    <title>註冊</title>
+</head>
+<body>
+  <div class="background">
+    <div class="ball"></div>
+    <div class="ball"></div>
+  </div>
+
+  <form action="#" th:action="@{/register/processRegistrationForm}" th:object="${webUser}" method="POST" class="fs-2" id="register-form">
+    <h3 class="heading-primary">註冊</h3>
+
+    <!--  線上課程老師的程式碼  -->
+<!--    <div th:if="${param.registrationError}" >-->
+<!--      <h1 class="message_h1">-->
+<!--        <span th:text="${param.registrationError}"></span>-->
+<!--      </h1>-->
+<!--    </div>-->
+
+    <!--  顯示錯誤訊息  -->
+    <div th:if="${registrationError}" class="message_box">
+      <h1 class="message_h1">
+        <span th:text="${registrationError}"></span>
+      </h1>
+    </div>
+
+    <input type="hidden" />
+
+    <label for="username">帳號(8-12)</label>
+    <input
+            type="text"
+            th:field="*{userName}"
+            class="username"
+            id="username"
+            name="username"
+            onchange="checkUserName();"
+            placeholder="輸入帳號"
+            pattern="^[0-9a-z]{8,12}$"
+
+    />
+    <div th:if="${#fields.hasErrors('userName')}" class="check-date">
+      <ul>
+        <li th:each="err : ${#fields.errors('userName')}" th:text="'User name ' + ${err}"></li>
+      </ul>
+    </div>
+
+<!--    <h1 class="check-date" id="checkUserName"></h1>-->
+
+    <label for="password">密碼(8-12)</label>
+    <input
+            type="password"
+            th:field="*{password}"
+            class="password"
+            id="password"
+            name="password"
+            onchange="checkPassword();"
+            placeholder="輸入密碼"
+            pattern="^[0-9a-z]{8,12}$"
+
+    />
+
+    <div th:if="${#fields.hasErrors('password')}" class="check-date">
+      <ul>
+        <li th:each="err : ${#fields.errors('password')}" th:text="'password ' + ${err}"></li>
+      </ul>
+    </div>
+
+<!--    <h1 class="check-date" id="checkPassword"></h1>-->
+
+    <label for="name">姓名</label>
+    <input
+            type="text"
+            th:field="*{name}"
+            class="name"
+            id="name"
+            name="name"
+            placeholder="貓貓貓"
+
+    />
+
+    <div th:if="${#fields.hasErrors('name')}" class="check-date">
+      <ul>
+        <li th:each="err : ${#fields.errors('name')}" th:text="'name ' + ${err}"></li>
+      </ul>
+    </div>
+
+    <label for="phone">電話</label>
+    <input
+            type="tel"
+            th:field="*{phone}"
+            class="phone"
+            id="phone"
+            name="phone"
+            onchange="checkPhone();"
+            placeholder="0995275871"
+            pattern="^09\d{2}-?\d{3}-?\d{3}$"
+
+    />
+    <div th:if="${#fields.hasErrors('phone')}" class="check-date">
+      <ul>
+        <li th:each="err : ${#fields.errors('phone')}" th:text="'phone ' + ${err}"></li>
+      </ul>
+    </div>
+<!--    <h1 class="check-date" id="checkPhone"></h1>-->
+
+    <label for="birthday">出生年月日</label>
+    <input
+            type="date"
+            th:field="*{birthday}"
+            class="birthday"
+            id="birthday"
+            name="birthday"
+            min="1900-01-01"
+
+    />
+
+    <div th:if="${#fields.hasErrors('birthday')}" class="check-date">
+      <ul>
+        <li th:each="err : ${#fields.errors('birthday')}" th:text="'birthday ' + ${err}"></li>
+      </ul>
+    </div>
+
+    <label for="email">Email</label>
+    <input
+            type="email"
+            th:field="*{email}"
+            class="email"
+            id="email"
+            name="email"
+            onchange="checkEmail();"
+            placeholder="cat@exaple.com"
+            pattern="^[A-Za-z0-9-_\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+$"
+
+    />
+
+    <div th:if="${#fields.hasErrors('email')}" class="check-date">
+      <ul>
+        <li th:each="err : ${#fields.errors('email')}" th:text="'email ' + ${err}"></li>
+      </ul>
+    </div>
+<!--    <h1 class="check-date" id="checkEmail"></h1>-->
+
+    <label for="gender">性別</label>
+    <select th:field="*{gender}" name="gender" id="gender" class="gender" >
+      <option value="">請選擇性別</option>
+      <option value="1">男</option>
+      <option value="2">女</option>
+    </select>
+
+    <div th:if="${#fields.hasErrors('gender')}" class="check-date">
+      <ul>
+        <li th:each="err : ${#fields.errors('gender')}" th:text="'gender ' + ${err}"></li>
+      </ul>
+    </div>
+
+    <label for="address">地址</label>
+    <input
+            class="address"
+            th:field="*{address}"
+            placeholder="貓貓市貓貓區貓貓路11號"
+            name="address"
+            id="address"
+
+    />
+
+    <div th:if="${#fields.hasErrors('address')}" class="check-date">
+      <ul>
+        <li th:each="err : ${#fields.errors('address')}" th:text="'address ' + ${err}"></li>
+      </ul>
+    </div>
+
+    <button type="submit" class="btn-login" >送出</button>
+
+    <div class="socail grid">
+      <div>
+        <a th:href="@{/}" class="btn-icon btn--full flex">
+          <ion-icon class="socail-icon" name="home-outline"></ion-icon>
+          <p>首頁</p>
+        </a>
+      </div>
+
+      <div>
+        <a th:href="@{/showMyLogin}" class="btn-icon btn--cat flex">
+          <ion-icon class="socail-icon" name="paw-outline"></ion-icon>
+          <p>返回</p>
+        </a>
+      </div>
+    </div>
+  </form>
+
+  <script
+          type="module"
+          src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <script
+          nomodule
+          src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+  ></script>
+
+  <!-- 驗證使用者資料 -->
+<!--  <script defer th:src="@{/js/check.js}"></script>-->
+
+</body>
+</html>

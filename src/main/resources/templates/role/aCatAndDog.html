@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}" />
+
+    <link rel="shortcut icon" th:href="@{/img/logo.png}" />
+    <title>管理</title>
+</head>
+<body>
+  <header class="slider-navigation">
+    <div class="nav_btn active">會員管理</div>
+    <div class="nav_btn">寵物管理</div>
+    <div class="nav_btn">刊登管理</div>
+    <div class="nav_btn">預約管理</div>
+    <div class="nav_btn">權限管理</div>
+  </header>
+
+  <!-- 會員管理 -->
+  <div class="content active">
+    <nav class="sidebar">
+      <ul class="side-nav">
+        <li class="side-nav__item">
+          <button class="side-nav__btn active">瀏覽會員</button>
+        </li>
+        <li class="side-nav__item">
+          <button class="side-nav__btn">
+            <span>新增會員</span>
+          </button>
+        </li>
+
+        <li class="side-nav__item">
+          <button class="side-nav__btn">
+            <span>修改會員</span>
+          </button>
+        </li>
+
+        <li class="side-nav__item">
+          <button class="side-nav__btn">
+            <span>刪除會員</span>
+          </button>
+        </li>
+
+        <li class="side-nav__item">
+          <a th:href="@{/member}" class="side-nav__link"> <span>退出模式</span>
+        </a></li>
+      </ul>
+    </nav>
+
+    <main class="main-table">
+
+      <!-- 瀏覽會員 -->
+      <section class="section-table active">
+        <table>
+          <thead>
+          <tr>
+            <th>編號</th>
+            <th>使用者名稱</th>
+            <th>姓名</th>
+            <th>電話</th>
+            <th>電子郵件</th>
+            <th>性別</th>
+            <th>地址</th>
+            <!--  <th>設定</th>
+            <th>設定</th>-->
+          </tr>
+          </thead>
+          <tbody>
+
+          <tr>
+            <th>${ member.userId }</th>
+            <td>${ member.username }</td>
+            <td>${ member.name }</td>
+            <td>${ member.phone }</td>
+            <td>${ member.email }</td>
+            <td>${ member.gender }</td>
+            <td>${ member.address }</td>
+            <!--
+              <td class="td-btn">
+                  <button class="btn btn--full">重置密碼</button>
+              </td>
+              <td class="td-btn">
+                  <button class="btn btn--cat">禁用</button>
+              </td>
+              -->
+            </tr>
+
+          </tbody>
+        </table>
+      </section>
+
+        <!-- 新增會員 -->
+      <section class="section-table">
+        <form action="../register" method="POST" class="section-form">
+          <h3 class="form-heading">新增會員</h3>
+
+          <div class="display-flex">
+            <label for="username">帳號(8-12)</label> <input type="text"
+                                                            class="username" id="username" name="username"
+                                                            placeholder="Enter username" pattern="^[0-9a-z]{8,12}$" />
+
+            <h1 id="checkUsername"></h1>
+          </div>
+
+          <div class="display-flex">
+            <label for="password">密碼(8-12)</label> <input type="password"
+                                                            class="password" id="password" name="password"
+                                                            placeholder="Enter password" pattern="^[0-9a-z]{8,12}$" />
+          </div>
+
+          <div class="display-flex">
+            <label for="name">姓名</label> <input type="text" class="name"
+                                                  placeholder="貓貓貓" id="name" name="name" />
+          </div>
+
+          <div class="display-flex">
+            <label for="phone">電話</label> <input type="tel" class="phone"
+                                                   id="phone" name="phone" placeholder="0995275871"
+                                                   pattern="^09\d{2}-?\d{3}-?\d{3}$" />
+          </div>
+
+          <div class="display-align">
+            <label for="birthday">出生年月日</label> <input type="date"
+                                                            class="birthday" id="birthday" name="birthday" min="1900-01-01"
+                                                            max="2019-01-01" />
+          </div>
+
+          <div class="display-flex">
+            <label for="email">Email</label> <input class="email" type="email"
+                                                    placeholder="cat@exaple.com" id="email" name="email"
+                                                    pattern="^[A-Za-z0-9-_\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$" />
+          </div>
+
+          <div class="display-align">
+            <label for="gender" class="label-other">性別</label> <select
+                  name="gender" id="gender" required>
+            <option value="0">請選擇性別</option>
+            <option value="1">男</option>
+            <option value="2">女</option>
+          </select>
+          </div>
+
+          <div class="display-flex">
+            <label for="address">地址</label> <input class="address"
+                                                     id="address" name="address" placeholder="貓貓市貓貓區貓貓路11號" />
+          </div>
+
+          <div class="btn-box">
+            <button type="submit" class="form-btn">送出</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 修改會員 -->
+      <section class="section-table">
+        <!-- 查詢會員 -->
+        <form action="" method="POST" class="section-form margin-bottom-10">
+          <h3 class="form-heading">修改會員</h3>
+
+          <div class="display-flex">
+            <label for="updateUserId">編號</label> <input type="text"
+                                                          class="userid" id="updateUserId" name="userid"
+                                                          placeholder="輸入使用者編號" pattern="^[0-9]{0,}$" />
+          </div>
+
+          <div class="btn-box">
+            <button type="button" class="form-btn update-btn" id="updateUserId-btn">查詢</button>
+          </div>
+        </form>
+
+        <!-- 準備更新的會員資料 -->
+        <form action="../update" method="POST" class="section-form update-form">
+          <h3 class="form-heading">更新會員</h3>
+          <div class="display-flex">
+            <label for="updateName">姓名</label> <input type="text" class="name"
+                                                        placeholder="貓貓貓" id="updateName" name="name" required />
+          </div>
+
+          <div class="display-flex">
+            <label for="updatePhone">電話</label> <input type="tel"
+                                                         class="phone" id="updatePhone" name="phone"
+                                                         placeholder="0995275871" pattern="^09\d{2}-?\d{3}-?\d{3}$"  required/>
+          </div>
+
+          <div class="display-align">
+            <label for="updateBirthday">出生年月日</label> <input type="date"
+                                                                  class="birthday" id="updateBirthday" name="birthday"
+                                                                  min="1900-01-01" max="2019-01-01" required />
+          </div>
+
+          <div class="display-flex">
+            <label for="updateEmail">Email</label> <input class="email"
+                                                          type="email" placeholder="cat@exaple.com" id="updateEmail"
+                                                          name="email"
+                                                          pattern="^[\w\.-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)*\.[a-zA-Z]{2,}$"
+                                                          required />
+          </div>
+
+          <div class="display-align">
+            <label for="updateGender" class="label-other">性別</label> <select
+                  name="gender" id="updateGender" required>
+            <option value="0">請選擇性別</option>
+            <option value="1">男</option>
+            <option value="2">女</option>
+          </select>
+          </div>
+
+          <div class="display-flex">
+            <label for="updateAddress">地址</label> <input class="address"
+                                                           id="updateAddress" name="address" placeholder="貓貓市貓貓區貓貓路11號" required />
+          </div>
+
+          <div class="btn-box">
+            <button type="submit" class="form-btn">送出</button>
+          </div>
+        </form>
+
+      </section>
+
+      <!-- 刪除會員 -->
+      <section class="section-table">
+        <!-- 查詢會員 -->
+        <form action="" method="POST" class="section-form">
+          <h3 class="form-heading">刪除會員</h3>
+
+          <div class="display-flex">
+            <label for="deleteUserId">編號</label> <input type="text"
+                                                          class="userid" id="deleteUserId" name="userid"
+                                                          placeholder="輸入使用者編號" />
+          </div>
+
+          <div class="btn-box">
+            <button type="submit" class="form-btn" id="deleteUserId-btn">送出</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+</body>
+</html>

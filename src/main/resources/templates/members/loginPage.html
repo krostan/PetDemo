@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+            rel="stylesheet" />
+
+    <link rel="stylesheet" th:href="@{/css/login/loginStyle.css}" />
+    <link rel="shortcut icon" th:href="@{/img/logo.png}" />
+
+    <title>登入</title>
+</head>
+<body>
+
+<div class="background">
+    <div class="ball"></div>
+    <div class="ball"></div>
+</div>
+
+
+<form action="#" th:action="@{/authenticateTheUser}" method="POST">
+
+    <h3 class="heading-primary">Login</h3>
+
+    <label for="username">帳號</label>
+    <input type="text" class="username" id="username" name="username" placeholder="Enter username" />
+
+    <label for="password">密碼</label>
+    <input type="password" class="password" id="password" name="password"
+           placeholder="Enter password" />
+
+    <div th:if="${param.error}">
+        <h1 class="message_h1">輸入的帳號/密碼錯誤!</h1>
+    </div>
+
+    <div th:if="${param.logout}">
+        <h1 class="message_h1">你已登出</h1>
+    </div>
+
+    <a href="#" class="pwd_link">忘記密碼?</a>
+
+    <button type="submit" class="btn-login">登入</button>
+
+    <div class="socail grid">
+        <div>
+            <a th:href="@{/}" class="btn-icon btn--full flex">
+                <ion-icon class="socail-icon" name="home-outline"></ion-icon>
+                <p>返回</p>
+            </a>
+        </div>
+
+        <div>
+
+            <a th:href="@{/register/showRegistrationForm}" class="btn-icon btn--cat flex"> <ion-icon
+                    class="socail-icon" name="paw-outline"></ion-icon>
+                <p>註冊</p>
+            </a>
+        </div>
+    </div>
+</form>
+
+<script type="module"
+        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule
+        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+<!--<script defer th:src="@{/js/refresh.js}"></script>-->
+
+</body>
+</html>
