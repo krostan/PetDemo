@@ -48,6 +48,10 @@ public class Pet {
     @JoinColumn(name="user_id")
     private User user;
 
+    // 這個publish是由 Publish 的 pet屬性映射的 (雙向)
+    @OneToOne(mappedBy = "pet", cascade = CascadeType.ALL)
+    private Publish publish;
+
     public Pet() {
     }
 
@@ -153,7 +157,7 @@ public class Pet {
         this.photos = photos;
     }
 
-    public boolean getEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
 
@@ -167,6 +171,14 @@ public class Pet {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Publish getPublish() {
+        return publish;
+    }
+
+    public void setPublish(Publish publish) {
+        this.publish = publish;
     }
 
     @Override

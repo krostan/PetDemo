@@ -14,5 +14,5 @@ public interface PetService {
 
 
     // 透過寵物ID找到寵物
-    Pet findById(int petId);
+    public Pet findById(int petId);
 }

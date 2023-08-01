@@ -57,19 +57,12 @@ public class User {
             cascade = CascadeType.ALL)
     private List<Pet> pets;
 
-    public User() {
-    }
+    @OneToMany(fetch = FetchType.EAGER,
+            mappedBy = "user",
+            cascade = CascadeType.ALL)
+    private List<Publish> publishes;
 
-    public User(String userName, String password, String name, String phone, LocalDate birthday, String email, String gender, String address, boolean enabled) {
-        this.userName = userName;
-        this.password = password;
-        this.name = name;
-        this.phone = phone;
-        this.birthday = birthday;
-        this.email = email;
-        this.gender = gender;
-        this.address = address;
-        this.enabled = enabled;
+    public User() {
     }
 
     public User(String userName, String password, String name, String phone, LocalDate birthday, String email, String gender, String address, boolean enabled, Collection<Role> roles) {
@@ -181,6 +174,14 @@ public class User {
         this.pets = pets;
     }
 
+    public List<Publish> getPublishes() {
+        return publishes;
+    }
+
+    public void setPublishes(List<Publish> publishes) {
+        this.publishes = publishes;
+    }
+
     public void addPet(Pet pet){
         if(pets == null){
             pets = new ArrayList<>();
@@ -188,6 +189,15 @@ public class User {
 
         pets.add(pet);
         pet.setUser(this);
+    }
+
+    public void addPublish(Publish publish){
+        if(publishes == null){
+            publishes = new ArrayList<>();
+        }
+
+        publishes.add(publish);
+        publish.setUser(this);
     }
 
     @Override

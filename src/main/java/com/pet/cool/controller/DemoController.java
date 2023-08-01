@@ -56,7 +56,7 @@ public class DemoController {
             List<Pet> enabledPet = new ArrayList<>();
 
             for(Pet pet : pets){
-                if(pet.getEnabled()){
+                if(pet.isEnabled()){
                     enabledPet.add(pet);
                 }
             }

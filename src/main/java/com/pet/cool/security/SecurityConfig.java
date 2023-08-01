@@ -55,7 +55,10 @@ public class SecurityConfig {
                 .exceptionHandling(configurer ->
                         configurer.accessDeniedPage("/access-denied")
                 );
-        ;
+
+        // 暫時禁用csrf
+        // 如不禁用 , 則在ajax POST到後端時 會被擋住
+        http.csrf(csrf -> csrf.disable());
 
         return http.build();
     }

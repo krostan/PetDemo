@@ -200,16 +200,18 @@ function publish() {
 
 	let petId = "";
 	pets.forEach(function(pet) {
-		//console.log(pet.petId);
+		console.log(pet.petId);
 		petId += pet.petId + ",";
 	});
 
 	petId = petId.substring(0, petId.length - 1);
 
-	let url;
-	url = "do-publish?pet=" + petId;
+    let url = "/publish/create";
+    let data = "petId=" + petId;
 
-	sendData(url);
+    // url , 和要傳送的data, 當作參數傳到function
+	sendData(url, data);
+
 	init_data(click);
 
 }
@@ -228,15 +230,13 @@ function adoption() {
 		return;
 	}
 
-
 	petId = pets[0].petId;
 	console.log(petId);
 
-	let url;
-	url = "do-adoption?pet=" + petId;
+	let url = "/adoption/create";
+    let data = "petId=" + petId;
 
-
-	sendData(url);
+	sendData(url, data);
 	init_data(click);
 
 }
@@ -245,7 +245,7 @@ function adoption() {
 /*                Ajax            */
 /**********************************/
 let xhr;
-function sendData(url) {
+function sendData(url, data) {
 
 	if (window.ActiveXObject) {
 		xhr = new ActiveXObject("Microsoft.XMLHTTP");
@@ -254,10 +254,12 @@ function sendData(url) {
 		xhr = new XMLHttpRequest();
 	}
 
+    console.log(data);
 	try {
+	    xhr.open("POST", url, true);
+	    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		xhr.onreadystatechange = get_print;
-		xhr.open("GET", url, true);
-		xhr.send();
+		xhr.send(data);
 	}
 	catch (e) {
 		window.alert("無法建立連線!!!");
