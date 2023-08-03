@@ -2,6 +2,7 @@ package com.pet.cool.controller;
 
 import com.pet.cool.entity.Pet;
 import com.pet.cool.entity.User;
+import com.pet.cool.service.PetService;
 import com.pet.cool.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpSession;
@@ -21,10 +22,13 @@ public class DemoController {
 
 
     private UserService userService;
+    private PetService petService;
 
     @Autowired
-    public DemoController(UserService userService){
+    public DemoController(UserService userService, PetService petService){
+
         this.userService = userService;
+        this.petService = petService;
     }
 
     @GetMapping("/")
@@ -50,7 +54,10 @@ public class DemoController {
             User user = userService.findByUserName(userName);
 
             // 因為設定是fetch = FetchType.EAGER, 可直接取得資料
-            List<Pet> pets = user.getPets();
+            // List<Pet> pets = user.getPets();
+
+            // 目前設定為 fetch = FetchType.LAZY 不會直接關聯
+            List<Pet> pets = petService.findAllByUserId(user.getUserId());
 
             // 找出enable 是1的 pet (1代表未刪除, 0代表刪除)
             List<Pet> enabledPet = new ArrayList<>();

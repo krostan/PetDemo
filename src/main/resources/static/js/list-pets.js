@@ -103,37 +103,6 @@ btnIconEls.forEach(function(btnIconEl, index) {
 });
 
 /**********************************/
-/*         scroll-behavior        */
-/**********************************/
-allLinks.forEach(function(link) {
-	link.addEventListener("click", function(e) {
-		e.preventDefault();
-		const href = this.getAttribute("href");
-		console.log("123");
-
-		if (href === "#") {
-			window.scrollTo({
-				top: 0,
-				behavior: "smooth",
-			});
-		}
-
-		if (href !== "#" && href.startsWith("#")) {
-			const sectionEl = document.querySelector(href);
-			sectionEl.scrollIntoView({
-				behavior: "smooth",
-			});
-		} else {
-			window.location.href = href;
-		}
-
-		if (link.classList.contains("nav__link")) {
-			headerEl.classList.toggle("nav-open");
-		}
-	});
-});
-
-/**********************************/
 /*          Menu animation        */
 /**********************************/
 const handleHover = function(e) {
@@ -216,7 +185,7 @@ function getSort() {
 		XHR = new XMLHttpRequest();
 	}
 
-	let url = "new-sort-pet";
+	let url = "/publish/sortByPet";
 
 	XHR.open("POST", url, true);
 	XHR.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -231,8 +200,18 @@ function getSort() {
 function getData() {
 	if (XHR.readyState == 4 && XHR.status == 200) {
 
-		/* 取得值後 再次呼叫 取得新的html 非常重要!!!*/
-		loadPage(1);
+        let responseData = XHR.responseText;
+
+        // 使用 DOMParser 將 responseData 轉換為 DOM 物件
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(responseData, "text/html");
+
+        // 找到要擷取的部分
+        let cardElement = doc.querySelector("#card");
+
+        // 將資料塞到想更換的地方
+        let cardContent = document.querySelector("#card");
+        cardContent.innerHTML = cardElement.innerHTML;
 	}
 }
 

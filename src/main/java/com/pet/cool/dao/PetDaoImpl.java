@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public class PetDaoImpl implements PetDao {
 
@@ -46,5 +48,23 @@ public class PetDaoImpl implements PetDao {
     @Transactional
     public void disablePet(Pet pet) {
         entityManager.merge(pet);
+    }
+
+    @Override
+    public List<Pet> findAllByUserId(int userId) {
+
+        TypedQuery<Pet> query =entityManager.createQuery(
+                "FROM Pet WHERE user.id = :userId", Pet.class);
+        query.setParameter("userId", userId);
+
+        List<Pet> result = null;
+        try{
+            result = query.getResultList();
+        }catch(Exception e){
+            // 待處理
+            result = null;
+        }
+
+        return result;
     }
 }

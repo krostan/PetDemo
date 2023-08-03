@@ -10,6 +10,8 @@ import com.pet.cool.pet.WebPet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PetServiceImpl implements PetService{
 
@@ -60,9 +62,13 @@ public class PetServiceImpl implements PetService{
 
     }
 
-
     @Override
     public Pet findById(int petId) {
         return petDao.findById(petId);
+    }
+
+    @Override
+    public List<Pet> findAllByUserId(int userId) {
+        return petDao.findAllByUserId(userId);
     }
 }

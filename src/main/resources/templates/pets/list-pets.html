@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+            rel="stylesheet" />
+
+    <!-- font  awesome cdn link -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- swiper css -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" th:href="@{/css/head-nav.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/queries.css}" />
+    <link rel="stylesheet" th:href="@{/css/listpets/list-pets.css}" />
+    <link rel="stylesheet" th:href="@{/css/pageButton.css}" />
+    <link rel="stylesheet" th:href="@{/css/shop/shop.css}" />
+    <link rel="stylesheet" th:href="@{/css/top.css}" />
+    <link rel="stylesheet" th:href="@{/css/swiper.css}" />
+
+    <link rel="shortcut icon" th:href="@{/img/logo.png}" />
+    <title>領養寵物</title>
+</head>
+<body>
+    <!-- header-nav -->
+    <header class="header">
+        <!-- MOBILE NAVIGATION -->
+        <button class="btn__mobile-nav">
+            <ion-icon class="icon__mobile-nav" name="menu-outline"></ion-icon>
+            <ion-icon class="icon__mobile-nav" name="close-outline"></ion-icon>
+        </button>
+
+        <a th:href="@{/animation}"> <img th:src="@{/img/logo.png}" alt="Logo" class="logo" />
+        </a>
+
+        <nav class="nav">
+            <ul class="nav__links">
+                <li class="nav__item">
+                    <a th:href="@{/#section-1}" class="nav__link">養貓好處</a>
+                </li>
+
+                <li class="nav__item">
+                    <a th:href="@{/#section-4}" class="nav__link">養貓需知</a>
+                </li>
+
+                <li class="nav__item">
+                    <a th:href="@{/pets/showPetForm}" class="nav__link">送養寵物</a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="pets" class="nav__link">領養寵物</a>
+                </li>
+
+                <li class="nav__item">
+                    <a th:href="@{/member}" class="nav__link nav-cta">會員專區</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="icons">
+            <i class="fas fa-search search_icon" id="search-btn"></i>
+        </div>
+
+        <form action="#" class="search-bar-container">
+            <input type="search" name="kwSearch" id="search-bar" placeholder="search here ...." />
+            <button type="submit" id="search-button" class="fas fa-search"></button>
+        </form>
+    </header>
+
+    <main class="main">
+        <!-- swiper -->
+        <section class="session-swiper">
+            <div class="swiper__text-box">
+                <h1 class="swiper-primary">
+                    <span class="swiper-primary--main">Be Their Voice</span> <span
+                        class="swiper-primary--sub">Adopt a Stray Today</span>
+                </h1>
+                <a href="#section-card" class="btn btn--swiper">Explore our
+                    tours</a>
+            </div>
+
+            <!-- Swiper -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img th:src="@{/img/cat1.jpg}" alt="" />
+                    </div>
+
+                    <div class="swiper-slide">
+                        <img th:src="@{/img/cat2.jpg}" alt="" />
+                    </div>
+
+                    <div class="swiper-slide">
+                        <img th:src="@{/img/dog1.jpg}" alt="" />
+                    </div>
+
+                    <div class="swiper-slide">
+                        <img th:src="@{/img/cat3.jpg}" alt="" />
+                    </div>
+
+                    <div class="swiper-slide">
+                        <img th:src="@{/img/dog2.jpg}" alt="" />
+                    </div>
+                </div>
+                <div class="swiper-scrollbar"></div>
+            </div>
+        </section>
+
+        <!-- list-pets -->
+        <section class="section-sort">
+            <div class="sort_box">
+                <div class="sor_box-text">Sort by :</div>
+
+                <div class="menu_box">
+                    <div class="menu-text">
+                        <div class="menu-header ">默認排序</div>
+
+                        <ul class="sort-menu">
+                            <li class="menu-li">
+                                <button class="sort-item" type="button">默認排序</button>
+                            </li>
+
+                            <li class="menu-li">
+                                <button class="sort-item" type="button">最新發布</button>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="icons_box">
+                        <ion-icon name="chevron-down-outline" class="icons_sort"></ion-icon>
+
+                        <ion-icon name="chevron-up-outline" class="icons_sort"></ion-icon>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <div class="grid grid--3-cols" id="card">
+
+                <div class="card_item" th:each="pet : ${pets}">
+                    <input type="hidden" name="petId" th:value="${pet.petId}">
+                    <!--            <img th:src="@{/img/1.jpg}"  class="card_img" alt="..." />-->
+                    <img th:src="${pet.photos}"  class="card_img" alt="..." />
+
+                    <div class="card_text-box">
+                        <h1 class="card_text-header" th:text="${pet.petName}"></h1>
+
+                        <span class="card_text-sp">條件:</span>
+                        <p class="card_text" th:text="${pet.quest}"></p>
+                    </div>
+
+                    <ul class="card_content-box">
+                        <li class="card_content">
+                            <div class="content_item">
+                                <div>寵物品種:</div>
+                                <div class="item_text" th:text="${pet.breed}"></div>
+                            </div>
+                        </li>
+
+                        <li class="card_content">
+                            <div class="content_item">
+                                <div>性別:</div>
+                                <div class="item_text" th:text="${pet.gender}"></div>
+                            </div>
+                        </li>
+
+                        <li class="card_content">
+                            <div class="content_item">
+                                <div>毛色:</div>
+                                <div class="item_text" th:text="${pet.coatColor}"></div>
+                            </div>
+                        </li>
+
+                        <li class="card_content">
+                            <div class="content_item">
+                                <div>年齡:</div>
+                                <div class="item_text" th:text="${pet.age}"></div>
+                            </div>
+                        </li>
+
+                        <li class="card_content">
+                            <div class="content_item">
+                                <div>刊登時間:</div>
+                                <div class="item_text" th:text="${#temporals.format(pet.publish.publishDate,'yyyy-MM-dd HH:mm')}"></div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                    <div class="card_btn-box">
+<!--                        <p class='card_btn-text'>已有正在等待結果的預約</p>-->
+
+                        <a href="#" class="btn btn--full" id="card-btn">預約</a>
+                        <button class="btn btn--cat btn-check" id="btn-check">詳細</button>
+                    </div>
+
+                    <div class="item_detail">
+                        <div class="item_wind">
+                            <button class="btn_detail">
+                                <ion-icon class="icon_detail" name="close-outline"></ion-icon>
+                            </button>
+
+                            <div class="card_text-box">
+                                <img th:src="@{/img/1.jpg}" class="card_img text-box-img" alt="..." />
+
+                                <h1 class="card_text-header" th:text="${pet.petName}"></h1>
+                                <span class="card_text-sp">條件:</span>
+                                <p class="card_text" th:text="${pet.quest}"></p>
+                            </div>
+
+                            <ul class="card_content-box">
+                                <li class="card_content">
+                                    <div class="content_item">
+                                        <div>寵物品種:</div>
+                                        <div class="item_text" th:text="${pet.breed}"></div>
+                                    </div>
+                                </li>
+
+                                <li class="card_content">
+                                    <div class="content_item">
+                                        <div>性別:</div>
+                                        <div class="item_text" th:text="${pet.gender}"></div>
+                                    </div>
+                                </li>
+
+                                <li class="card_content">
+                                    <div class="content_item">
+                                        <div>毛色:</div>
+                                        <div class="item_text" th:text="${pet.coatColor}"></div>
+                                    </div>
+                                </li>
+
+                                <li class="card_content">
+                                    <div class="content_item">
+                                        <div>年齡:</div>
+                                        <div class="item_text" th:text="${pet.age}"></div>
+                                    </div>
+                                </li>
+
+                                <li class="card_content">
+                                    <div class="content_item">
+                                        <div>目前位置:</div>
+                                        <div class="item_text" th:text="${pet.location}"></div>
+                                    </div>
+                                </li>
+
+                                <li class="card_content">
+                                    <div class="content_item">
+                                        <div>寵物種類:</div>
+                                        <div class="item_text" th:text="${pet.species}"></div>
+                                    </div>
+                                </li>
+
+                                <li class="card_content">
+                                    <div class="content_item">
+                                        <div>體型:</div>
+                                        <div class="item_text" th:text="${pet.size}"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- shop -->
+        <section>
+            <div class="shop">
+                <div class="shop__item-box">
+                    <h1 class="shop__item-heading">心動浪浪</h1>
+
+                    <div class="shop__btn-box">
+                        <div>
+                            <button class="shop__btn-icon shop__btn-full"
+                                    onclick="adoption()">
+                                <ion-icon name="cart-outline"></ion-icon>
+                                送出
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn__box">
+                    <ion-icon name="caret-forward-circle-outline" class="btn__icon"></ion-icon>
+
+                    <ion-icon name="caret-back-circle-outline" class="btn__icon"></ion-icon>
+                </button>
+
+                <!-- top -->
+                <div class="shop__top-box">
+                    <a href="#" class="shop__top-btn">
+                        <span>Top</span>
+                        <ion-icon class="btn__top" name="caret-up-circle-outline"></ion-icon>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- pageButton -->
+        <section class="section-pageBtn">
+            <div class="pageBtn_box">
+                <div class="pagination">
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="container--footer grid--footer">
+            <div class="logo-col">
+                <a th:href="@{/animation.html}"> <img th:src="@{/img/logo.png}" alt="Logo" class="logo" />
+                </a>
+                <ul class="footer__links">
+                    <li><a class="footer__link" href="#"> <ion-icon
+                            class="footer__icon" name="logo-twitter"></ion-icon>
+                    </a></li>
+                    <li><a class="footer__link" href="#"> <ion-icon
+                            class="footer__icon" name="logo-facebook"></ion-icon>
+                    </a></li>
+                    <li><a class="footer__link" href="#"> <ion-icon
+                            class="footer__icon" name="logo-instagram"></ion-icon>
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="address-col">
+                <p class="footer-heading">聯絡我們</p>
+                <address class="contacts">
+                    <p class="address">貓貓市貓貓區貓貓路945號</p>
+                    <p>
+                        <a class="footer__link" href="tel:9527-5871">9527-5871</a> <br />
+                        <a class="footer__link" href="mailto:cat@catmeals.com">cat@catmeals.com</a>
+                    </p>
+                </address>
+            </div>
+            <nav class="nav-col">
+                <p class="footer-heading">貓貓相關</p>
+                <ul class="foot-nav">
+                    <li><a class="footer__link" href="#">注意事項</a></li>
+
+                    <li><a class="footer__link" href="#">認養貓咪</a></li>
+
+                    <li><a class="footer__link" href="#">貓餐介紹</a></li>
+                </ul>
+            </nav>
+            <p class="copyright">Copyright &copy; 2023 by Leo Fan. All right
+                s reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script defer th:src="@{/js/myswiper.js}"></script>
+
+    <!-- sticky nav button-->
+    <script type="module"
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- swiperjs -->
+    <script
+            src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <!-- 自定義JS-->
+    <script defer th:src="@{/js/list-pets.js}"></script>
+
+    <!-- <script defer th:src="@{/js/pagination.js}"></script> -->
+
+    <script defer th:src="@{/js/shop.js}"></script>
+
+</body>
+</html>

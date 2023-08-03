@@ -154,7 +154,6 @@ public class PetDetailController {
         webPet.setAge(pet.getAge());
         webPet.setLocation(pet.getLocation());
 
-
         webPet.setSpecies(PetSpecies.getValueByOtionPetSpecies(pet.getSpecies()));
         webPet.setSize(PetSize.getValueByOptionPetSize(pet.getSize()));
 

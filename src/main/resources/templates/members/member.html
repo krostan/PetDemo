@@ -57,7 +57,7 @@
         </li>
 
         <li class="nav__item">
-          <a href="pets" class="nav__link">領養寵物</a>
+          <a th:href="@{/publish/allPublishes}" class="nav__link">領養寵物</a>
         </li>
 
         <li class="nav__item">
@@ -123,14 +123,14 @@
         </li>
 
         <li class="side-nav__item">
-          <a href="pets" class="side-nav__link">
+          <a th:href="@{/publish/allPublishes}" class="side-nav__link">
             <ion-icon name="paw-outline" class="side-nav__icon"></ion-icon>
             <span>領養寵物</span>
           </a>
         </li>
 
         <li class="side-nav__item">
-          <a href="search-publish" class="side-nav__link">
+          <a th:href="@{/publish/myPublishes}" class="side-nav__link">
             <ion-icon name="build-outline" class="side-nav__icon"></ion-icon>
             <span>修改刊登</span>
           </a>

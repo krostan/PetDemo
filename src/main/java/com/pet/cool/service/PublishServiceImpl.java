@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PublishServiceImpl implements PublishService{
@@ -29,9 +31,7 @@ public class PublishServiceImpl implements PublishService{
     @Override
     public Publish findByPetId(int petId) {
 
-        Pet pet = petDao.findById(petId);
-
-        return publishDao.findPublishByPet(pet);
+        return publishDao.findPublishByPet(petId);
     }
 
     @Override
@@ -48,5 +48,48 @@ public class PublishServiceImpl implements PublishService{
         publish.setUser(user);
 
         publishDao.save(publish);
+    }
+
+    @Override
+    public List<Publish> getUserPublishByUserId(int userId) {
+        return publishDao.getUserPublishByUserId(userId);
+    }
+
+    @Override
+    public List<Publish> getAllPublishes(int userId) {
+
+        // 找到全部刊登
+        List<Publish> allPublishes = publishDao.getAllPublishes();
+        List<Publish> result = new ArrayList<>();
+
+        for(Publish publish : allPublishes){
+            if(publish.getUser().getUserId() != userId){
+                result.add(publish);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Publish> sortAllPublishes(String sort) {
+
+        String sortData = "";
+
+        if (sort.equals("最新發布")) {
+            sortData = "desc";
+        } else if (sort.equals("默認排序")) {
+            sortData = "asc";
+        }
+
+        return publishDao.sortAllPublishes(sortData);
+    }
+
+    @Override
+    public void deletePublish(int petId) {
+
+        Publish publish = publishDao.findPublishByPet(petId);
+
+        publishDao.deletePublish(publish.getPublishId());
     }
 }

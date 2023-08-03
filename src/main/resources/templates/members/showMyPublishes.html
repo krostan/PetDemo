@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet" />
+
+    <!-- font  awesome cdn link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+    <!-- swiper css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" th:href="@{/css/head-nav.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/user/side.css}" />
+    <link rel="stylesheet" th:href="@{/css/queries.css}" />
+    <link rel="stylesheet" th:href="@{/css/user/member.css}" />
+    <link rel="stylesheet" th:href="@{/css/pageButton.css}" />
+    <link rel="stylesheet" th:href="@{/css/shop/shop.css}" />
+    <link rel="stylesheet" th:href="@{/css/top.css}" />
+
+    <link rel="shortcut icon" th:href="@{/img/logo.png}" />
+    <title>修改刊登</title>
+</head>
+<body>
+
+    <!-- header-nav -->
+    <header class="header">
+        <!-- MOBILE NAVIGATION -->
+        <button class="btn__mobile-nav">
+            <ion-icon class="icon__mobile-nav" name="menu-outline"></ion-icon>
+            <ion-icon class="icon__mobile-nav" name="close-outline"></ion-icon>
+        </button>
+
+        <a th:href="@{/animation}"> <img th:src="@{/img/logo.png}" alt="Logo" class="logo" />
+        </a>
+
+        <nav class="nav">
+            <ul class="nav__links">
+                <li class="nav__item">
+                    <a th:href="@{/#section-1}" class="nav__link">養貓好處</a>
+                </li>
+
+                <li class="nav__item">
+                    <a th:href="@{/#section-4}" class="nav__link">養貓需知</a>
+                </li>
+
+                <li class="nav__item">
+                    <a th:href="@{/pets/showPetForm}" class="nav__link">送養寵物</a>
+                </li>
+
+                <li class="nav__item">
+                    <a th:href="@{/publish/allPublishes}" class="nav__link">領養寵物</a>
+                </li>
+
+                <li class="nav__item">
+                    <a th:href="@{/member}" class="nav__link nav-cta">會員專區</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="icons">
+            <i class="fas fa-search search_icon" id="search-btn"></i>
+        </div>
+
+        <form action="#" class="search-bar-container">
+            <input type="search" name="kwSearch" id="search-bar" placeholder="search here ...." />
+            <button type="submit" id="search-button" class="fas fa-search"></button>
+        </form>
+    </header>
+
+    <div class="content">
+        <nav class="sidebar">
+            <ul class="side-nav">
+                <li class="side-nav__item side-nav__item--active user">
+                    <a href="#" class="side-nav__link nav__none">
+                        <ion-icon name="" class="side-nav__icon user-icon"> </ion-icon>
+                        <span sec:authentication="principal.username"></span>
+                        <span sec:authentication="principal.authorities"></span>
+                    </a>
+                </li>
+
+                <li class="side-nav__item">
+                    <a th:href="@{/}" class="side-nav__link">
+                        <ion-icon name="home-outline" class="side-nav__icon"> </ion-icon>
+                        <span>首頁</span>
+                    </a>
+                </li>
+
+                <li class="side-nav__item">
+                    <a href="search" class="side-nav__link">
+                        <ion-icon name="person-outline" class="side-nav__icon"></ion-icon>
+                        <span>會員資料</span>
+                    </a>
+                </li>
+
+                <li class="side-nav__item">
+                    <a href="members/changepwd.jsp" class="side-nav__link">
+                        <ion-icon name="key-outline" class="side-nav__icon"></ion-icon>
+                        <span>變更密碼</span>
+                    </a>
+                </li>
+
+                <li class="side-nav__item">
+                    <a th:href="@{/member}" class="side-nav__link">
+                        <ion-icon name="clipboard-outline" class="side-nav__icon"></ion-icon>
+                        <span>浪浪</span>
+                    </a>
+                </li>
+
+                <li class="side-nav__item">
+                    <a th:href="@{/pets/showPetForm}" class="side-nav__link">
+                        <ion-icon name="add-circle-outline" class="side-nav__icon"></ion-icon>
+                        <span>新增寵物</span>
+                    </a>
+                </li>
+
+                <li class="side-nav__item">
+                    <a th:href="@{/publish/allPublishes}" class="side-nav__link">
+                        <ion-icon name="paw-outline" class="side-nav__icon"></ion-icon>
+                        <span>領養寵物</span>
+                    </a>
+                </li>
+
+                <li class="side-nav__item">
+                    <a th:href="@{/publish/myPublishes}" class="side-nav__link">
+                        <ion-icon name="build-outline" class="side-nav__icon"></ion-icon>
+                        <span>修改刊登</span>
+                    </a>
+                </li>
+
+                <li class="side-nav__item">
+                    <a href="search-adoption" class="side-nav__link">
+                        <ion-icon name="calendar-outline" class="side-nav__icon"></ion-icon>
+                        <span>預約訊息</span>
+                    </a>
+                </li>
+
+                <li class="side-nav__item" sec:authorize="hasRole('MANAGER')">
+                    <a th:href="@{/leaders}" class="side-nav__link">
+                        <ion-icon name="leaf-outline" class="side-nav__icon"></ion-icon>
+                        <span>管理者模式</span>
+                    </a>
+                </li>
+
+                <li class="side-nav__item" sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/systems}" class="side-nav__link">
+                        <ion-icon name="leaf-outline" class="side-nav__icon"></ion-icon>
+                        <span>系統管理者模式</span>
+                    </a>
+                </li>
+
+                <li class="side-nav__item">
+                    <form action="#" th:action="@{/logout}" method="post" >
+                        <button type="submit" class="side-nav__btn">
+                            <ion-icon name="enter-outline" class="side-nav__icon"></ion-icon>
+                            <span>登出</span>
+                        </button>
+                    </form>
+
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main">
+
+            <section class="section-card">
+                <div class="grid grid--3-cols" id="card">
+
+                    <div class="card_item" th:each="pet : ${pets}">
+                        <input type="hidden" name="petId" th:value="${pet.petId}">
+                        <!--            <img th:src="@{/img/1.jpg}"  class="card_img" alt="..." />-->
+                        <img th:src="${pet.photos}"  class="card_img" alt="..." />
+
+                        <div class="card_text-box">
+                            <h1 class="card_text-header" th:text="${pet.petName}"></h1>
+
+                        </div>
+
+                        <ul class="card_content-box">
+                            <li class="card_content">
+                                <div class="content_item">
+                                    <div>寵物品種:</div>
+                                    <div class="item_text" th:text="${pet.breed}"></div>
+                                </div>
+                            </li>
+
+                            <li class="card_content">
+                                <div class="content_item">
+                                    <div>性別:</div>
+                                    <div class="item_text" th:text="${pet.gender}"></div>
+                                </div>
+                            </li>
+
+                            <li class="card_content">
+                                <div class="content_item">
+                                    <div>毛色:</div>
+                                    <div class="item_text" th:text="${pet.coatColor}"></div>
+                                </div>
+                            </li>
+
+                            <li class="card_content">
+                                <div class="content_item">
+                                    <div>年齡:</div>
+                                    <div class="item_text" th:text="${pet.age}"></div>
+                                </div>
+                            </li>
+
+                            <li class="card_content">
+                                <div class="content_item">
+                                    <div>寵物種類:</div>
+                                    <div class="item_text" th:text="${pet.species}"></div>
+                                </div>
+                            </li>
+
+                            <li class="card_content">
+                                <div class="content_item">
+                                    <div>體型:</div>
+                                    <div class="item_text" th:text="${pet.size}"></div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="card_btn-box">
+                            <a th:href="@{/publish/deletePublish/{petId}(petId=${pet.petId})}" class="btn btn--full" id="card-adop">取消刊登</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- shop -->
+            <section>
+                <div class="shop">
+                    <div class="shop__item-box">
+                        <h1 class="shop__item-heading">心動浪浪</h1>
+
+                        <div class="shop__btn-box">
+                            <button class="shop__btn-icon shop__btn-full" onclick="publish()">
+                                <ion-icon name="navigate-outline"></ion-icon>
+                                送出
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="btn__box">
+                        <ion-icon name="caret-forward-circle-outline" class="btn__icon"></ion-icon>
+
+                        <ion-icon name="caret-back-circle-outline" class="btn__icon"></ion-icon>
+                    </button>
+
+                    <!-- top -->
+                    <div class="shop__top-box">
+                        <a href="#" class="shop__top-btn">
+                            <span>Top</span>
+                            <ion-icon class="btn__top" name="caret-up-circle-outline"></ion-icon>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- pageButton -->
+            <section class="section-pageBtn">
+                <div class="pageBtn_box">
+                    <div class="pagination">
+
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="container--footer grid--footer">
+            <div class="logo-col">
+                <a th:href="@{/animation.html}"> <img th:src="@{/img/logo.png}" alt="Logo" class="logo" />
+                </a>
+                <ul class="footer__links">
+                    <li><a class="footer__link" href="#"> <ion-icon
+                            class="footer__icon" name="logo-twitter"></ion-icon>
+                    </a></li>
+                    <li><a class="footer__link" href="#"> <ion-icon
+                            class="footer__icon" name="logo-facebook"></ion-icon>
+                    </a></li>
+                    <li><a class="footer__link" href="#"> <ion-icon
+                            class="footer__icon" name="logo-instagram"></ion-icon>
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="address-col">
+                <p class="footer-heading">聯絡我們</p>
+                <address class="contacts">
+                    <p class="address">貓貓市貓貓區貓貓路945號</p>
+                    <p>
+                        <a class="footer__link" href="tel:9527-5871">9527-5871</a> <br />
+                        <a class="footer__link" href="mailto:cat@catmeals.com">cat@catmeals.com</a>
+                    </p>
+                </address>
+            </div>
+            <nav class="nav-col">
+                <p class="footer-heading">貓貓相關</p>
+                <ul class="foot-nav">
+                    <li><a class="footer__link" href="#">注意事項</a></li>
+
+                    <li><a class="footer__link" href="#">認養貓咪</a></li>
+
+                    <li><a class="footer__link" href="#">貓餐介紹</a></li>
+                </ul>
+            </nav>
+            <p class="copyright">Copyright &copy; 2023 by Leo Fan. All right
+                s reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module"
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- swiperjs -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <script defer th:src="@{/js/member.js}"></script>
+    <!-- 分頁 -->
+    <script defer th:src="@{/js/pagination.js}"></script>
+    <!-- 購物車 -->
+    <script defer th:src="@{/js/shop.js}"></script>
+    <!-- header上的search -->
+    <script defer th:src="@{/js/search.js}"></script>
+</body>
+</html>

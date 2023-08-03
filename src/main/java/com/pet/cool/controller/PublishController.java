@@ -9,19 +9,20 @@ import com.pet.cool.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
     創建刊登：/publish/create
-    讀取刊登：/publish/{publishId}
-    更新刊登：/publish/{publishId}/update
+    讀取(除了自己的刊登)的刊登：/publish/allPublishes
+    顯示自己的刊登：/publish/myPublishes
     刪除刊登：/publish/{publishId}/delete
 * */
 @Controller
@@ -52,7 +53,6 @@ public class PublishController {
 
         // 將 ajax傳過來的 (由一堆petId組成的字串)分解成一個個petId
         String[] petIds = petId.split(",");
-        System.out.println(petId);
 
         // 判斷是否已經刊登過此寵物
         Publish publish;
@@ -74,5 +74,70 @@ public class PublishController {
         }
 
         return "redirect:/member";
+    }
+
+    @GetMapping("/allPublishes")
+    public String searchAllPublishes(HttpSession session, Model model){
+        String userName = (String) session.getAttribute("userName");
+        User user = userService.findByUserName(userName);
+
+        List<Publish> publishList = publishService.getAllPublishes(user.getUserId());
+
+        List<Pet> petList = new ArrayList<>();
+
+        for(Publish publish : publishList){
+            petList.add(publish.getPet());
+        }
+
+        model.addAttribute("pets", petList);
+
+        return "pets/list-pets";
+    }
+
+    @PostMapping("/sortByPet")
+    public String sortByPet(@RequestParam("sortData") String sortData
+            , HttpSession session, Model model){
+
+        String userName = (String) session.getAttribute("userName");
+        User user = userService.findByUserName(userName);
+
+        List<Publish> publishList = publishService.sortAllPublishes(sortData);
+
+        List<Pet> petList = new ArrayList<>();
+
+        for(Publish publish : publishList){
+            petList.add(publish.getPet());
+        }
+
+        model.addAttribute("pets", petList);
+
+        return "pets/list-pets";
+    }
+
+    @GetMapping("/myPublishes")
+    public String myPublishes(HttpSession session, Model model){
+        String userName = (String) session.getAttribute("userName");
+        User user = userService.findByUserName(userName);
+
+        List<Publish> publishList = publishService.getUserPublishByUserId(user.getUserId());
+
+        List<Pet> petList = new ArrayList<>();
+
+        for(Publish publish : publishList){
+            petList.add(publish.getPet());
+        }
+
+        model.addAttribute("pets", petList);
+
+        return "members/showMyPublishes";
+    }
+
+    @GetMapping("/deletePublish/{petId}")
+    public String myPublishes(Model theModel, @PathVariable("petId") int petId){
+
+        System.out.println(petId);
+
+        publishService.deletePublish(petId);
+        return "redirect:/publish/myPublishes";
     }
 }

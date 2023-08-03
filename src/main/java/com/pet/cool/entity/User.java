@@ -52,12 +52,12 @@ public class User {
     private Collection<Role> roles;
 
 
-    @OneToMany(fetch = FetchType.EAGER,
+    @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "user",
             cascade = CascadeType.ALL)
     private List<Pet> pets;
 
-    @OneToMany(fetch = FetchType.EAGER,
+    @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "user",
             cascade = CascadeType.ALL)
     private List<Publish> publishes;
